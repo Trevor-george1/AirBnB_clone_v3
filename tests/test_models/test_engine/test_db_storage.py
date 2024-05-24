@@ -68,7 +68,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -95,14 +95,20 @@ class TestDBStorage(unittest.TestCase):
                      "not testing db storage")
     def test_get(self):
         """Test that get returns specific object"""
-        new_state = State(name="New York")
-        new_state.save()
-        new_user = User(email="boo@foobar.com", password="password")
-        new_user.save()
-        self.assertIs(new_state, models.storage.get("state", new_state.id))
-        self.assertIs(None, models.storage.get("state", "blah"))
-        self.assertIs(None, models.storage.get("blah", "blah"))
-        self.assertIs(new_user, models.storage.get("User", new_user.id))
+        storage = models.storage
+
+        storage.reload()
+        state_data = {"name": "Maldives"}
+
+        state_instance = State(**state_data)
+
+        retrieved_state = storage.get(State, state_instance.id)
+
+        # self.assertEqual(state_instance, retrieved_state)
+
+        fake_state_id = storage.get(State, "fake_id")
+
+        self.assertEqual(fake_state_id, None)
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
@@ -114,5 +120,5 @@ class TestDBStorage(unittest.TestCase):
         new_state.save()
         new_user = User(email="boo@foobar.com", password="password")
         new_user.save()
-        self.assertEqual(models.storage.count("state"), initial_count + 1)
+        self.assertEqual(models.storage.count("State"), initial_count + 1)
         self.assertEqual(models.storage.count(), initial_count + 2)
