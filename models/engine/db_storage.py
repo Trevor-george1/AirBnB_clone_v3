@@ -75,13 +75,13 @@ class DBStorage:
         """return object based on class and ID"""
         if cls is None:
             return None
-        if type(cls) == str:
+        if type(cls) is str:
             cls = classes.get(cls)
         return self.__session.query(cls).filter(cls.id == id).first()
 
     def count(self, cls=None):
         """count objects based on cls name"""
-        if type(cls) == str:
+        if type(cls) is str:
             cls = classes.get(cls)
         if cls is None:
             return len(self.all())

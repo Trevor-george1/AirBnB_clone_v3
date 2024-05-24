@@ -105,7 +105,7 @@ class TestDBStorage(unittest.TestCase):
         self.assertIs(new_user, models.storage.get("User", new_user.id))
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
-                        "not testing db storage")
+                     "not testing db storage")
     def test_count(self):
         """Test that get returns specific object"""
         initial_count = models.storage.count()
