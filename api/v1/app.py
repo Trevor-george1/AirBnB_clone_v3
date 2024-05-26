@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Starting my api"""
+"""createing a flask app and
+    Starting my api
+"""
 import os
 from flask import Flask
 from models import storage

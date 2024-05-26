@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""creates routes"""
+"""creates routes and returns a Json response"""
 from api.v1.views import app_views
 from flask import jsonify
 
