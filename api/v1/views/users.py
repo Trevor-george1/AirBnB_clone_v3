@@ -23,6 +23,16 @@ def get_user(user_id):
     return jsonify(user.to_dict())
 
 
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)  # noqa
+def delete_user(user_id):
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
+    user.delete()
+    storage.save()
+    return make_response(jsonify({}), 200)
+
+
 @app_views.route('/users', methods=["POST"], strict_slashes=False)  # noqa
 def create_user():
     """creates a User object"""
