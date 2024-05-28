@@ -95,20 +95,14 @@ class TestDBStorage(unittest.TestCase):
                      "not testing db storage")
     def test_get(self):
         """Test that get returns specific object"""
-        storage = models.storage
-
-        storage.reload()
-        state_data = {"name": "Maldives"}
-
-        state_instance = State(**state_data)
-
-        retrieved_state = storage.get(State, state_instance.id)
-
-        # self.assertEqual(state_instance, retrieved_state)
-
-        fake_state_id = storage.get(State, "fake_id")
-
-        self.assertEqual(fake_state_id, None)
+        new_state = State(name="New York")
+        new_state.save()
+        new_user = User(email="bob@foobar.com", password="password")
+        new_user.save()
+        self.assertIs(new_state, models.storage.get("State", new_state.id))
+        self.assertIs(None, models.storage.get("State", "blah"))
+        # self.assertIs(None, models.storage.get("blah", "blah"))
+        self.assertIs(new_user, models.storage.get("User", new_user.id))
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
