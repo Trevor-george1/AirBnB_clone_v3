@@ -10,7 +10,7 @@ from models.review import Review
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)  # noqa
 def get_reviews_by_place(place_id):
-    """Retrieves the list of all Review objects of a place"""
+    """Retrieves the list of all reviews"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
@@ -70,7 +70,7 @@ def update_review(review_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:  # noqa
+        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:  #
             setattr(review, key, value)
     storage.save()
     return make_response(jsonify(review.to_dict()), 200)
