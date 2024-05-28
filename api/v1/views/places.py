@@ -54,9 +54,8 @@ def create_place(city_id):
     user = storage.get("User", data["user_id"])
     if not user:
         abort(400)
-    data['city_id'] = city_id
     place = Place(**data)
-    # setattr(place, 'city_id', city_id)
+    setattr(place, 'city_id', city_id)
     # storage.new(place)
     # storage.save()
     place.save()
