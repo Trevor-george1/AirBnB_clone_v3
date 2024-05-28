@@ -56,8 +56,9 @@ def create_place(city_id):
         abort(400)
     if 'name' not in data:
         abort(400, 'Missing name')
+    data['city_id'] = city_id
     place = Place(**data)
-    setattr(place, 'city_id', city_id)
+    # setattr(place, 'city_id', city_id)
     storage.new(place)
     storage.save()
     return make_response(jsonify(place.to_dict()), 201)
