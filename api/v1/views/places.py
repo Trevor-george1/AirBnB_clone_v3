@@ -57,7 +57,7 @@ def create_place(city_id):
     place = Place(**data)
     setattr(place, 'city_id', city_id)
     storage.new(place)
-    storage.new()
+    storage.save()
     return make_response(jsonify(place.to_dict()), 201)
 
 
