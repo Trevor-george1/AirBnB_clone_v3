@@ -57,7 +57,7 @@ def create_review(place_id):
     review = Review(**data)
     setattr(review, 'place_id', place_id)
     storage.new(review)
-    storage.new()
+    storage.save()
     return make_response(jsonify(review.to_dict()), 201)
 
 
