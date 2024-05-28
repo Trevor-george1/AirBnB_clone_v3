@@ -62,6 +62,10 @@ def delete(city_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)  # noqa
 def update_city(city_id):
     """updates a city by city_id"""
+    if request.content_type != 'application/json':
+        abort(400, "Not a JSON")
+    if not request.get_json():
+        abort(400, "Not a JSON")
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
