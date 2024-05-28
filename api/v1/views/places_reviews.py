@@ -71,7 +71,7 @@ def update_review(review_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:  #
+        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:  # noqa
             setattr(review, key, value)
     storage.save()
     return make_response(jsonify(review.to_dict()), 200)
