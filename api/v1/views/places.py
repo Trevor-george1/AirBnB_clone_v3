@@ -51,14 +51,13 @@ def create_place(city_id):
         abort(400, 'Missing user_id')
     if 'name' not in data:
         abort(400, 'Missing name')
-    user = storage.get("User", data["user_id"])
+    user = storage.get("User", data['user_id'])
     if not user:
         abort(400)
     place = Place(**data)
     setattr(place, 'city_id', city_id)
-    # storage.new(place)
-    # storage.save()
-    place.save()
+    storage.new(place)
+    storage.save()
     return (jsonify(place.to_dict()), 201)
 
 
