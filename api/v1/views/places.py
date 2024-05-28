@@ -6,7 +6,7 @@ from models import storage
 from models.place import Place
 from api.v1.views import app_views
 from models.city import City
-
+from models.user import User
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)  # noqa
 def get_places_by_city(city_id):
@@ -30,10 +30,10 @@ def get_place(place_id):
 def delete_place(place_id):
     """delete a place by place id"""
     place = storage.get("Place", place_id)
-    if not place:
+    if place is None:
         abort(404)
-    storage.delete(place)
-    storage.new()
+    place.delete()
+    storage.save()
     return make_response(jsonify({}), 200)
 
 
