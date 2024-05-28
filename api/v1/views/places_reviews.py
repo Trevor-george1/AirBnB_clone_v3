@@ -10,7 +10,7 @@ from models.review import Review
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)  # noqa
 def get_reviews_by_place(place_id):
-    """Retrieves the list of all reviews"""
+    """Retrieves the list of all Review objects of a place"""
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
