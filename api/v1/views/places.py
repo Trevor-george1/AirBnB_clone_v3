@@ -8,6 +8,7 @@ from api.v1.views import app_views
 from models.city import City
 from models.user import User
 
+
 @app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)  # noqa
 def get_places_by_city(city_id):
     """get place by city"""
@@ -43,6 +44,8 @@ def create_place(city_id):
     city = storage.get("City", city_id)
     if not city:
         abort(404)
+    if not request.get_json():
+        abort(400, 'Not a JSON')
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
