@@ -18,7 +18,7 @@ def get_places_by_city(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)  # noqa
-def get_place():
+def get_place(place_id):
     """get place by place_id"""
     place = storage.get("Place", place_id)
     if not place:
