@@ -29,6 +29,10 @@ def get_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)  # noqa
 def create_city(state_id):
     """creates a new city object"""
+    if request.content_type != 'application/json':
+        abort(400, "Not a JSON")
+    if not request.get_json():
+        abort(400, "Not a JSON")
     state = storage.get("State", state_id)
     if not state:
         abort(404)
